@@ -445,7 +445,9 @@ snip.rv = generate_matrix_element(%d, %d, %d, %d, '%c', '%c', [%s], [%s])
 	displayed += " " * len(linfo) + "\\end{%cmatrix}$0" % prefix + (" " + re.sub(r"\\", r"\\\\", rinfo) if rinfo else "")
 	snip.expand_anon(displayed)
 
-endglobalCcsnippet beamertemp "Beamer template" b
+endglobal
+
+snippet beamertemp "Beamer template" b
 ---
 title: "${1:Factors selection}"
 author: Xie Zejian
