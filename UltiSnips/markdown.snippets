@@ -445,10 +445,7 @@ snip.rv = generate_matrix_element(%d, %d, %d, %d, '%c', '%c', [%s], [%s])
 	displayed += " " * len(linfo) + "\\end{%cmatrix}$0" % prefix + (" " + re.sub(r"\\", r"\\\\", rinfo) if rinfo else "")
 	snip.expand_anon(displayed)
 
-endglobal
-
-
-snippet beamertemp "Beamer template" b
+endglobalCcsnippet beamertemp "Beamer template" b
 ---
 title: "${1:Factors selection}"
 author: Xie Zejian
@@ -617,7 +614,10 @@ endsnippet
 priority 1000
 snippet mm "mathematicablock" w
 
-$$ $1 $$$0
+$$ 
+$1
+$$
+$0
 
 endsnippet
 
@@ -658,39 +658,8 @@ snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
 
-snippet lr "left( right)" i
-(${1:${VISUAL}})$0
-endsnippet
-
-
-snippet lr( "left( right)" i
-\left( ${1:${VISUAL}} \right) $0
-endsnippet
-
-
-snippet lr| "left| right|" i
-\left| ${1:${VISUAL}} \right| $0
-endsnippet
-
-snippet lr{ "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
-endsnippet
-
-snippet lrb "left\{ right\}" i
-\\{${1:${VISUAL}}\\}$0
-endsnippet
-
-snippet lr[ "left[ right]" i
-\left[ ${1:${VISUAL}} \right] $0
-endsnippet
-
-snippet lra "leftangle rightangle" iA
-\left<${1:${VISUAL}} \right>$0
-endsnippet
-
-context "math()"
-snippet conj "conjugate" iA
-\overline{$1}$0
+snippet lr "left( right)" iA
+($1)$0
 endsnippet
 
 context "math()"
@@ -704,13 +673,8 @@ snippet taylor "taylor" w
 endsnippet
 
 context "math()"
-snippet lim "limit" w
-\lim_{${1:n} \to ${2:\infty}} 
-endsnippet
-
-context "math()"
-snippet limsup "limsup" w
-\limsup_{${1:n} \to ${2:\infty}} 
+snippet lim "limit" iA
+\lim 
 endsnippet
 
 context "math()"
@@ -932,7 +896,7 @@ endsnippet
 
 context "math()"
 snippet NN "n" iA
-\N
+\mathbb{N}
 endsnippet
 
 context "math()"
@@ -963,17 +927,17 @@ endsnippet
 
 context "math()"
 snippet RR "real" iA
-\R
+\mathbb{R}
 endsnippet
 
 context "math()"
 snippet QQ "Q" iA
-\Q
+\mathbb{Q}
 endsnippet
 
 context "math()"
 snippet ZZ "Z" iA
-\Z
+\mathbb{Z}
 endsnippet
 
 context "math()"
@@ -1087,6 +1051,11 @@ snippet omg "omega" iA
 \omega
 endsnippet
 
+context "math()"
+snippet Omg "Omega" iA
+\Omega
+endsnippet
+
 snippet #1 "section #" iA
 # 
 endsnippet
@@ -1147,20 +1116,6 @@ snippet "(\\?[a-zA-Z]\w*)bf" "mathbf" riA
 \bm{\mathbf{`!p snip.rv=match.group(1)`}}
 endsnippet
 
-snippet lem "if (...)"
-```{lemma, ${1}, name="${2}"}
-
-${1:${VISUAL}}
-
-```
-endsnippet
-
-
-context "math()"
-snippet sp "math space"
-\ 
-endsnippet
-
 snippet obli "oblique"
 *$1*$0
 endsnippet
@@ -1216,7 +1171,7 @@ ${3:${VISUAL}}
 $0
 endsnippet
 
-snippet rightarr "right arrow"
+snippet rto "right arrow"
 \rightarrow
 endsnippet
 
@@ -1276,7 +1231,7 @@ endsnippet
 
 context "math()"
 snippet mu "mu" iA
-\mu
+\mu 
 endsnippet
 
 snippet eesp "(EE)"
@@ -1297,11 +1252,6 @@ if not snip.c:
 `
 endsnippet
 
-snippet bmat "bmat" w
-context "math()"
-\begin{bmatrix} $1 \end{bmatrix} $0
-endsnippet
-
 post_jump "generate_matrix('b', snip)"
 context "math()"
 snippet "bmat\(([1-9]{1,2}[a-zA-Z]{0,2})\)" "bmat" irw
@@ -1311,3 +1261,164 @@ if not snip.c:
 `
 endsnippet
 
+snippet accp "Accumulation point"
+accumulation point
+endsnippet
+
+snippet st "such that"
+s.t. 
+endsnippet
+
+context "math()"
+snippet sucsim "" iA
+\succsim
+endsnippet
+
+context "math()"
+snippet vert "abs" iA
+\lvert $1 \rvert$0
+endsnippet
+
+snippet ie ""
+i.e. 
+endsnippet
+
+priority 100
+context "math()"
+snippet "([\\|a-z|A-Z|0-9|'|_|^]*)bf" "mathbf" riA
+\bm{\mathbf{`!p snip.rv=match.group(1)`$1}}
+endsnippet
+
+context "math()"
+snippet prefer "partially order in game theory" iA
+\succ
+endsnippet
+
+snippet scsg "Strictly Competitive Strategic Game"
+strictly competitive strategic game
+endsnippet
+
+context "math()"
+snippet max "max" w
+\max_{$1}$0
+endsnippet
+
+
+context "math()"
+snippet min "min" w
+\min_{$1}$0
+endsnippet
+
+snippet nash "Nash equilibrium"
+Nash equilibrium
+endsnippet
+
+context "math()"
+snippet xy* "(x*,y*)" iA
+(x^{*},y^{*})
+endsnippet
+
+context "math()"
+snippet upt "up to" iA
+\nearrow 
+endsnippet
+
+snippet ae "Almost everywhere"
+a.e. 
+endsnippet
+
+context "math()"
+snippet indi "Indicator" iA
+\bm{\mathbf{1}}_{$1}$0
+endsnippet
+
+snippet pbsp "Probability Space"
+$(\Omega,\mathcal{F},P)$
+endsnippet
+
+context "math()"
+snippet Omg "Omega" iA
+\Omega
+endsnippet
+
+context "math()"
+snippet mto "mapto" iA
+\mapsto 
+endsnippet
+
+context "math()"
+snippet qq "qquad" iA
+\qquad
+endsnippet
+
+snippet ffsp "ff measurable space" 
+$(F,\mathcal{F})$
+endsnippet
+
+context "math()"
+snippet diam "diam" iA
+\text{diam}
+endsnippet
+
+context "math()"
+snippet txt "text" iA
+\text{$1}$0
+endsnippet
+
+context "math()"
+snippet sup "Description" iA
+\sup
+endsnippet
+
+context "math()"
+snippet inf "inf" iA
+\inf
+endsnippet
+
+context "math()"
+snippet lsup "limsup" iA
+\limsup
+endsnippet
+
+context "math()"
+snippet linf "liminf" iA
+\liminf
+endsnippet
+
+snippet mtsp "metirc space" 
+$(X,d)$
+endsnippet
+
+snippet tpsp "topological space" 
+$(X,\tau_{$1})$$0
+endsnippet
+
+snippet prp "proposition" b
+
+::: {.proposition ${1:#label} name="${2}"}
+
+${3:${VISUAL}}
+
+:::
+$0
+endsnippet
+
+snippet coro "corollary" b
+
+::: {.corollary ${1:#label} name="${2}"}
+
+${3:${VISUAL}}
+
+:::
+$0
+endsnippet
+
+context "math()"
+snippet lb "{}" iA
+\\{$1\\}$0
+endsnippet
+
+context "math()"
+snippet Cc "supset" iA
+\supset
+endsnippet
