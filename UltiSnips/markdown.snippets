@@ -530,7 +530,7 @@ snippet iff "iff" iA
 endsnippet
 
 snippet mk "Math" wA
-$${1}$`!p
+$$1$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
 	snip.rv = ' '
 else:
@@ -917,6 +917,7 @@ snippet uuu "bigcup" iA
 \bigcup_{${1:i \in ${2: I}}} $0
 endsnippet
 
+context "math()"
 snippet nnn "bigcap" iA
 \bigcap_{${1:i \in ${2: I}}} $0
 endsnippet
@@ -1268,7 +1269,7 @@ accumulation point
 endsnippet
 
 snippet st "such that"
-s.t. 
+s.t. $0
 endsnippet
 
 context "math()"
@@ -1422,5 +1423,44 @@ endsnippet
 
 context "math()"
 snippet Cc "supset" iA
-\supset
+\supset$0
+endsnippet
+
+snippet impoo "important" wA
+**$1**`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+context "math()"
+snippet rho "rho" iA
+\rho$0
+endsnippet
+
+context "math()"
+snippet delt "delta" iA
+\delta$0
+endsnippet
+
+context "math()"
+snippet phi "phi" iA
+\phi$0
+endsnippet
+
+context "math()"
+snippet span "span" iA
+\text{span}$0
+endsnippet
+
+context "math()"
+snippet KK "mathbbK" iA
+\mathbb{K}$0
+endsnippet
+
+context "math()"
+snippet card "cardinal" iA
+\text{card}$0
 endsnippet
