@@ -1,5 +1,7 @@
 global !p
 import re
+
+
 def first_p1_not_p2(line, p1, p2):
     p1s = re.search(p1, line)
     p2s = re.search(p2, line)
@@ -447,23 +449,44 @@ snip.rv = generate_matrix_element(%d, %d, %d, %d, '%c', '%c', [%s], [%s])
 
 endglobal
 
-snippet beamertemp "Beamer template" b
+snippet indextemp "Index Temp for bookdown" b
 ---
 title: "${1:Factors selection}"
-author: Xie Zejian
+author: Zhang Songxin
 institute: SUSTech
 date: "${2:Dec 13,2020}"
-output: 
-  beamer_presentation:
-    theme: "AnnArbor"
-    colortheme: "dolphin"
-    fonttheme: "structurebold"
-    toc: true
+bibliography: references.bib
+documentclass: book
+output:
+  bookdown::pdf_book:
     includes:
-      in_header: "preamble.tex"
+      in_header: preamble.tex
+site: bookdown::bookdown_site
+link-citations: yes
+
 ---
+
+\newcommand{\lt}{<}
+\newcommand{\gt}{>}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Tau}{T}
+
 endsnippet
 
+snippet outputtemp "output.yml" b
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: biblatex
+  keep_tex: no
+endsnippet
+
+snippet ref "ref" w
+\@ref(${1:thm}:$2)$0
+endsnippet
 
 snippet beg "begin{} / end{}" bA
 \\begin{$1}
@@ -546,9 +569,9 @@ endsnippet
 
 context "math()"
 snippet ali "Align" bA
-\begin{align*}
+\begin{aligned}
 	${1:${VISUAL}}
-.\end{align*}
+\end{aligned}
 endsnippet
 
 
@@ -615,12 +638,10 @@ endsnippet
 
 priority 1000
 snippet mm "mathematicablock" w
-
 $$ 
 $1
 $$
 $0
-
 endsnippet
 
 
@@ -660,13 +681,19 @@ snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
 
-snippet lr "left( right)" iA
+context "math()"
+snippet l) "left( right)" iA
+\left($1\right)$0
+endsnippet
+
+context "math()"
+snippet lr "()" iA
 ($1)$0
 endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{i=${1:1}}^{${2:\infty}} ${3:a_iz^i}
+\sum_{${1:i=1}}^{${2:\infty}} ${3:a_iz^i}
 endsnippet
 
 context "math()"
@@ -681,7 +708,7 @@ endsnippet
 
 context "math()"
 snippet prod "product" w
-\prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
+\prod_{${1:i=${2:1}}}^{${3:\infty}} $4$0
 endsnippet
 
 
@@ -708,11 +735,6 @@ endsnippet
 context "math()"
 snippet td "to the ... power" iA
 ^{$1}$0
-endsnippet
-
-context "math()"
-snippet rd "to the ... power" iA
-^{($1)}$0
 endsnippet
 
 context "math()"
@@ -801,7 +823,7 @@ endsnippet
 
 context "math()"
 snippet norm "norm" iA
-\|$1\|$0
+\|$1\|_{$2}$0
 endsnippet
 
 priority 100
@@ -822,7 +844,6 @@ snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rw
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
-
 priority 100
 context "math()"
 snippet -> "to" iA
@@ -836,7 +857,7 @@ snippet <-> "leftrightarrow" iA
 endsnippet
 
 context "math()"
-snippet !> "mapsto" iA
+snippet mto "mapsto" iA
 \mapsto 
 endsnippet
 
@@ -869,17 +890,6 @@ context "math()"
 snippet ~~ "~" iA
 \sim 
 endsnippet
-
-context "math()"
-snippet set "set" wA
-\\{$1\\} $0
-endsnippet
-
-context "math()"
-snippet || "mid" iA
- \mid 
-endsnippet
-
 
 context "math()"
 snippet cc "subset" Ai
@@ -922,10 +932,9 @@ snippet nnn "bigcap" iA
 \bigcap_{${1:i \in ${2: I}}} $0
 endsnippet
 
-
 context "math()"
-snippet OO "emptyset" iA
-\emptyset
+snippet CC "complex" iA
+\mathbb{C}
 endsnippet
 
 context "math()"
@@ -957,11 +966,6 @@ endsnippet
 context "math()"
 snippet '(?<!i)sts' "text subscript" irA
 _\text{$1} $0
-endsnippet
-
-context "math()"
-snippet tt "text" iA
-\text{$1}$0
 endsnippet
 
 context "math()"
@@ -1026,37 +1030,33 @@ snippet DD "D" iA
 endsnippet
 
 context "math()"
-snippet topo "topology" iA
+snippet tau "topology" iA
 \tau
 endsnippet
 
 context "math()"
 snippet alp "alpha" iA
-\alpha
+\alpha$0
 endsnippet
 
 context "math()"
 snippet bet "beta" iA
-\beta
+\beta$0
 endsnippet
 
 context "math()"
 snippet gamm "gamma" iA
-\gamma
+\gamma$0
 endsnippet
 
 context "math()"
 snippet lambd "lambda" iA
-\lambda
-endsnippet
-context "math()"
-snippet omg "omega" iA
-\omega
+\lambda$0
 endsnippet
 
 context "math()"
-snippet Omg "Omega" iA
-\Omega
+snippet omg "omega" iA
+\omega$0
 endsnippet
 
 snippet #1 "section #" iA
@@ -1133,7 +1133,6 @@ ${3:${VISUAL}}
 $0
 endsnippet
 
-
 snippet cor "corollary" b
 ::: {.corollary ${1:#label} name="${2}"}
 
@@ -1174,10 +1173,6 @@ ${3:${VISUAL}}
 $0
 endsnippet
 
-snippet rto "right arrow"
-\rightarrow
-endsnippet
-
 snippet assu "Assume that"
 Assume that $0
 endsnippet
@@ -1191,7 +1186,7 @@ finite intersection property
 endsnippet
 
 context "math()"
-snippet empty "Emptyset" iA
+snippet ept "Emptyset" iA
 \varnothing
 endsnippet
 
@@ -1204,23 +1199,13 @@ snippet sigm "sigma" iA
 \sigma
 endsnippet
 
-snippet siga "sigma-Algebra"
+snippet sigmA "sigma-Algebra"
 $\sigma$-Algebra
 endsnippet
 
 context "math()"
-snippet uparr "upparrow" iA
+snippet upar "upparrow" iA
 \uparrow 
-endsnippet
-
-context "math()"
-snippet land "land" iA
-\land 
-endsnippet
-
-context "math()"
-snippet lor "lor" iA
-\lor 
 endsnippet
 
 context "math()"
@@ -1234,11 +1219,11 @@ endsnippet
 
 context "math()"
 snippet mu "mu" iA
-\mu 
+\mu$0
 endsnippet
 
-snippet eesp "(EE)"
-$(E,\mathcal{E})$
+snippet mssp "(EE)"
+$(S,\mathcal{S})$$0
 endsnippet
 
 context "math()"
@@ -1278,12 +1263,8 @@ snippet sucsim "" iA
 endsnippet
 
 context "math()"
-snippet vert "abs" iA
-\lvert $1 \rvert$0
-endsnippet
-
-snippet ie ""
-i.e. 
+snippet abs "abs" iA
+\left|$1\right|$0
 endsnippet
 
 priority 100
@@ -1293,7 +1274,7 @@ snippet "([\\|a-z|A-Z|0-9|'|_|^]*)bf" "mathbf" riA
 endsnippet
 
 context "math()"
-snippet prefer "partially order in game theory" iA
+snippet pfer "partially order in game theory" iA
 \succ
 endsnippet
 
@@ -1322,8 +1303,13 @@ snippet xy* "(x*,y*)" iA
 endsnippet
 
 context "math()"
-snippet upt "up to" iA
-\nearrow 
+snippet neto "up to" iA
+\nearrow $0
+endsnippet
+
+context "math()"
+snippet seto "searrow" iA
+\searrow $0
 endsnippet
 
 snippet ae "Almost everywhere"
@@ -1345,11 +1331,6 @@ snippet Omg "Omega" iA
 endsnippet
 
 context "math()"
-snippet mto "mapto" iA
-\mapsto 
-endsnippet
-
-context "math()"
 snippet qq "qquad" iA
 \qquad
 endsnippet
@@ -1360,12 +1341,12 @@ endsnippet
 
 context "math()"
 snippet diam "diam" iA
-\text{diam}
+\mathop{\text{diam}}
 endsnippet
 
 context "math()"
 snippet txt "text" iA
-\text{$1}$0
+\mathop{\text{$1}}$0
 endsnippet
 
 context "math()"
@@ -1418,12 +1399,12 @@ endsnippet
 
 context "math()"
 snippet lb "{}" iA
-\\{$1\\}$0
+\left\\{$1\right\\}$0
 endsnippet
 
 context "math()"
 snippet Cc "supset" iA
-\supset$0
+\supset $0
 endsnippet
 
 snippet impoo "important" wA
@@ -1441,18 +1422,18 @@ snippet rho "rho" iA
 endsnippet
 
 context "math()"
-snippet delt "delta" iA
+snippet dta "delta" iA
 \delta$0
 endsnippet
 
 context "math()"
 snippet phi "phi" iA
-\phi$0
+\varphi$0
 endsnippet
 
 context "math()"
 snippet span "span" iA
-\text{span}$0
+\mathop{\text{span}}$0
 endsnippet
 
 context "math()"
@@ -1462,5 +1443,234 @@ endsnippet
 
 context "math()"
 snippet card "cardinal" iA
-\text{card}$0
+\mathop{\text{card}}$0
 endsnippet
+
+context "math()"
+snippet dim "dimension" iA
+\mathop{\text{dim}}$0
+endsnippet
+
+snippet nmsp "normed vector space" wA
+$(${1:X},\|\cdot\|_{$2})$$0
+endsnippet
+
+context "math()"
+snippet bvet "big vert" iA
+\big\lvert$1\big\rvert$0
+endsnippet
+
+context "math()"
+snippet lt "<" iA
+\lt $0
+endsnippet
+
+context "math()"
+snippet le "<=" iA
+\le $0
+endsnippet
+
+context "math()"
+snippet thta "theta" iA
+\theta $0
+endsnippet
+
+context "math()"
+snippet gt ">" iA
+\gt $0
+endsnippet
+
+context "math()"
+snippet ge ">=" iA
+\ge $0
+endsnippet
+
+context "math()"
+snippet tilde "tilde" iA
+\tilde $0
+endsnippet
+
+context "math()"
+snippet mid "\middle" iA
+\mid $0
+endsnippet
+
+snippet Tsp "T_x space" w
+$T_{$1}$ space$0
+endsnippet
+
+snippet sep "sepp" iA
+;$0
+endsnippet
+
+snippet ie "i.e." 
+i.e. $0
+endsnippet
+
+context "math()"
+snippet fnsp "function space" iA
+\mathcal{$1}^{$2}_{$3}\left($4\right)$0
+endsnippet
+
+snippet lpsp "lpspace" wA
+$\ell^{p}$ space$0
+endsnippet
+
+snippet Lpsp "Lpspace" wA
+$L^p$ space$0
+endsnippet
+
+context "math()"
+snippet lp "lp" wA
+\ell^${1:p}$0
+endsnippet
+
+context "math()"
+snippet Lp "Lpsp" wA
+L^${1:p}_{$2}(${3:\Omega})$0
+endsnippet
+
+context "math()"
+snippet spt "support" iA
+\mathop{\text{supp}}$0
+endsnippet
+
+snippet ae "a.e." w
+a.e.$0
+endsnippet
+
+context "math()"
+snippet ball "ball" iA
+B_{${1:r}}(${2:x})$0
+endsnippet
+
+context "math()"
+snippet cir "circle" iA
+\circ $0
+endsnippet
+
+context "math()"
+snippet psi "psi" iA
+\psi$0
+endsnippet
+
+context "math()"
+snippet unipl "<=" iA
+\Longleftarrow$0
+endsnippet
+
+context "math()"
+snippet dsum "direct sum" iA
+\oplus $0
+endsnippet
+
+context "math()"
+snippet own "own" iA
+\owns $0
+endsnippet
+
+context "math()"
+snippet osc "osc" iA
+\mathop{\text{osc}}$0
+endsnippet
+
+snippet rmk "remark" b
+
+::: {.remark ${1:#label} name="${2}"}
+
+${3:${VISUAL}}
+
+:::
+$0
+endsnippet
+
+context "math()"
+snippet ker "kernel" iA
+\ker $0
+endsnippet
+
+context "math()"
+snippet Im "image" iA
+\mathop{\text{Im}}$0
+endsnippet
+
+snippet latex "latex-mode" b
+\`\`\`{=latex}
+$1
+\`\`\`
+$0
+endsnippet
+
+snippet codi "codi" b
+\begin{center}
+	\begin{codi}[$1]
+	$2
+	\end{codi}
+\end{center}$0
+endsnippet
+
+context "math()"
+snippet xrar "xrightarrow" iA
+\xrightarrow{$1}$0
+endsnippet
+
+context "math()"
+snippet ~= "simeq" iA
+\simeq$0
+endsnippet
+
+context "math()"
+snippet ptial "partial" iA
+\partial $0
+endsnippet
+
+context "math()"
+snippet scr "mathscr" iA
+\mathscr{$1}$0
+endsnippet
+
+context "math()"
+snippet ff "mcalF" iA
+\mathcal{F}_{$1}$0
+endsnippet
+
+context "math()"
+snippet ox "otimes" iA
+\otimes $0
+endsnippet
+
+context "math()"
+snippet Gr "Graph" iA
+\mathop{\text{Gr}}$0
+endsnippet
+
+context "math()"
+snippet balc "closed ball" iA
+B_{${1:r}}[${2:x}]$0
+endsnippet
+
+context "math()"
+snippet hrto "hookrightarrow" iA
+\hookrightarrow $0
+endsnippet
+
+context "math()"
+snippet land "land" iA
+\land $0
+endsnippet
+
+context "math()"
+snippet lor "lor" iA
+\lor $0
+endsnippet
+
+context "math()"
+snippet CC "Subset" iA
+\Subset $0
+endsnippet
+
+context "math()"
+snippet cds "\cdots" iA
+\cdots$0
+endsnippet
+
